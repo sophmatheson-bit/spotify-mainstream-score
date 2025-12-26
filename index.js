@@ -16,11 +16,11 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-rl.question("Enter artist name: ", async (artistName) => {
+rl.question("Enter Spotify user ID: ", async (userID) => {
   try {
-    const encodedArtist = encodeURIComponent(artistName);
+    const encodedUser = encodeURIComponent(userID);
 
-    const url = `https://api.spotify.com/v1/search?q=${encodedArtist}&type=artist&limit=1`;
+    const url = `https://api.spotify.com/v1/users/${encodedUser}/playlists`
 
     const response = await fetch(url, {
       headers: {
@@ -33,14 +33,23 @@ rl.question("Enter artist name: ", async (artistName) => {
     }
 
     const data = await response.json();
-    const artists = data.artists.items;
+    const playlists = data.items;
 
-    if (artists.length === 0) {
-      console.log("No artist found.");
-    } else {
-      console.log(`Artist: ${artists[0].name}`);
-      console.log(`Popularity: ${artists[0].popularity}`);
+    if (playlists.length == 0) {
+        console.log("No public playlists found.");
     }
+    else {
+        console.log(`Found ${playlists.length} playlists:\n`);
+
+        playlists.forEach((playlist, index) => {
+            console.log(`${index + 1}. ${playlist.name}`);
+            console.log(`   Tracks: ${playlist.tracks.total}`);
+            console.log(`   Track endpoint: ${playlist.tracks.href}`);
+            console.log(`   Public: ${playlist.public}`);
+            console.log("");
+        });
+    }
+    
   } catch (err) {
     console.error(err.message);
   } finally {
