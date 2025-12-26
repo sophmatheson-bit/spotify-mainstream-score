@@ -1,0 +1,25 @@
+{
+  "name": "spotify-mainstream-score",
+  "version": "1.0.0",
+  "description": "Input your Spotify user ID and receive a score 0-100 that determines how mainstream your music taste is.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sophmatheson-bit/spotify-mainstream-score.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/sophmatheson-bit/spotify-mainstream-score/issues"
+  },
+  "homepage": "https://github.com/sophmatheson-bit/spotify-mainstream-score#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "node-fetch": "^3.3.2"
+  }
+}
