@@ -4,12 +4,45 @@ import readline from "readline";
 
 dotenv.config({ quiet: true });
 
-const ACCESS_TOKEN = process.env.SPOTIFY_ACCESS_TOKEN;
+let accessToken = null;
+let tokenExpiresAt = 0;
 
-if (!ACCESS_TOKEN) {
-  console.error("Missing SPOTIFY_ACCESS_TOKEN in .env");
-  process.exit(1);
+async function getAccessToken() {
+  const now = Date.now();
+
+  // Reuse token if still valid
+  if (accessToken && now < tokenExpiresAt) {
+    return accessToken;
+  }
+
+  const response = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization:
+        "Basic " +
+        Buffer.from(
+          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+        ).toString("base64")
+    },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: process.env.SPOTIFY_REFRESH_TOKEN
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Token refresh failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  accessToken = data.access_token;
+  tokenExpiresAt = now + data.expires_in * 1000;
+
+  return accessToken;
 }
+
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -22,9 +55,11 @@ rl.question("Enter Spotify user ID: ", async (userID) => {
 
     const url = `https://api.spotify.com/v1/users/${encodedUser}/playlists`
 
+    const token = await getAccessToken();
+
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`
+        Authorization: `Bearer ${token}`
       }
     });
 
