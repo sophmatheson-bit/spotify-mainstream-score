@@ -46,24 +46,34 @@ async function getAccessToken() {
 async function getTracks(playlist) {
   try {
     const token2 = await getAccessToken();
+    let url = playlist.tracks.href;
+    const popularity = [];
 
-    const response = await fetch(playlist.tracks.href, {
-      headers: {
-        Authorization: `Bearer ${token2}`
-      }
-    });
+    while (url) {
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token2}`}
+      });
 
-    if(!response.ok) {
+      if(!response.ok) {
       throw new Error(`Spotify API error: ${response.status}`);
+      }
+
+      const data2 = await response.json();
+
+      popularity.push(
+        ...data2.items
+        .filter(item => item.track?.popularity != null)
+        .map(item => item.track.popularity)
+      );
+
+      url = data2.next;
     }
 
-    const data2 = await response.json();
-    const tracks = data2.items
-
-    console.log(tracks);
+    return popularity;
   }
   catch (err) {
     console.error(err.message);
+    return [];
   }
 }
 
@@ -98,18 +108,15 @@ rl.question("Enter Spotify user ID: ", async (userID) => {
         console.log("No public playlists found.");
     }
     else {
-      
-      playlists.forEach(getTracks);
-        
-       // console.log(`Found ${playlists.length} playlists:\n`);
-
-       // playlists.forEach((playlist, index) => {
-           // console.log(`${index + 1}. ${playlist.name}`);
-           // console.log(`   Tracks: ${playlist.tracks.total}`);
-           // console.log(`   Track endpoint: ${playlist.tracks.href}`);
-           // console.log(`   Public: ${playlist.public}`);
-           // console.log("");
-        //});
+      const results = await Promise.all(playlists.map(getTracks));
+      const allPopularity = results.flat();
+      console.log(JSON.stringify(allPopularity))
+      var sum = 0;
+      for (var number of allPopularity) {
+        sum += number;
+      }
+      const average = sum / allPopularity.length;
+      console.log(average);
     }
     
   } catch (err) {
