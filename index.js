@@ -110,13 +110,19 @@ rl.question("Enter Spotify user ID: ", async (userID) => {
     else {
       const results = await Promise.all(playlists.map(getTracks));
       const allPopularity = results.flat();
-      console.log(JSON.stringify(allPopularity))
+      //console.log(JSON.stringify(allPopularity))
       var sum = 0;
       for (var number of allPopularity) {
         sum += number;
       }
       const average = sum / allPopularity.length;
-      console.log(average);
+      console.log(`Your mainstream score: ${average}`);
+      console.log(`        0-20: Deep niche/obscure. You listen to underground, experimental, or very new artists.
+        21-40: Niche but established. You listen to artists with loyal fanbases but limited mainstream exposure.
+        41-60: Mid-Level. You listen to artists that are popular on Spotify playlists but not global chart leaders.
+        61-80: Mainstream. You listen to widely recognized artists and keep up with popular music.
+        81-100: Global/Mass Appeal. You mostly listen to the biggest artists in the world.`)
+
     }
     
   } catch (err) {
