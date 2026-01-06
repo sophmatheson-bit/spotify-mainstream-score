@@ -1,40 +1,54 @@
-# Spotify Playlist Popularity Analyzer
-A Node.js CLI tool that fetches the user's public Spotify playlists and the popularity score of each track using the Spotify Web API. These values are used to determine a "mainstream score" between 0-100 that describes the user's tendency either towards niche or global artists.
+# spotify-mainstream-score
+**Input your Spotify user ID and receive a score (0-100) that determines how mainstream your music taste is.**
+This CLI tool analyzes your public Spotify playlists and calculates a "mainstream score" based on how popular the tracks are.
 
-This project demonstrates:
-- one
-- two
-- three
+# Features
+- Easy CLI interface for calculating your **music mainstream score**
+- Uses Spotify Web API to fetch playlist and track popularity
+- Outputs a descriptive breakdown of your listening habits
+- Lightweight and simple to run locally
 
-## Tech Stack
-- one
-- two
-- three
+# How it Works
+The app:
+1. Fetches all public playlists for your Spotify account
+2. Retrieves each track's popularity score from the Spotify API
+3. Computes an overall **mainstream score (0-100)**
+4. Describes what that score means in terms of listening preferences
+
+# Tech Stack
+- JavaScript / Node.js
+- Spotify Web API
+- Node Package Manager (npm/yarn)
 
 ## Prerequisites
-You'll need:
-- Spotify Developer account
-- Registered Spotify app
-- Spotify refresh token with playlist access
+Before running the project, make sure you have:
+:heavy_check_mark: Node.js installed
+:heavy_check_mark: A **Spotify Developer account**
+:heavy_check_mark: A registered Spotify app
+:heavy_check_mark: A **Refresh Token** with playlist access
 
-## Installation and usage
-:one: Install dependencies  
-:two: Create a .env file in the project root
-
+## Installation
+:one: Clone the repo
+```
+git clone https://github.com/sophmatheson-bit/spotify-mainstream-score.git
+cd spotify-mainstream-score
+```
+:two: Install dependencies
+```npm install```
+:three: Create a ```.env``` file in the project root and add:
 ```
 SPOTIFY_CLIENT_ID=your_client_id
 SPOTIFY_CLIENT_SECRET=your_client_secret
 SPOTIFY_REFRESH_TOKEN=your_refresh_token
-
 ```
-### :warning: **Never commit your ```.env``` file**
-It is in the ```.gitignore``` file currently.
+### :warning: ***Do not commit your ```.env``` file!*** It should be ignored via ```.gitignore```
 
-:three: Run the script.  
-:four: Enter your Spotify user ID found by navigating to your profile on the Spotify browser version and copying the string following ```https://open.spotify.com/user/``` in the address bar.
-
-## Output
-The script outputs the user's maintstream score and a scale describing its meaning.
+## Usage
+Run the script:
+```npm start```
+Follow the prompt to input your Spotify User ID.  
+Your User ID is found in the URL when viewing your profile in a web browser:
+```https://open.spotify.com/user/<your_user_id>```
 
 Example output:
 ```
@@ -45,6 +59,11 @@ Your mainstream score: 45.49358307318765
         61-80: Mainstream. You listen to widely recognized artists and keep up with popular music.
         81-100: Global/Mass Appeal. You mostly listen to the biggest artists in the world.
 ```
+
+## Enhancement Ideas
+- Employ /me endpoint to retrieve the User ID automatically
+- Gather additional data such as listening habits over time
+- A web UI to display user scores and stats
 
 
 
