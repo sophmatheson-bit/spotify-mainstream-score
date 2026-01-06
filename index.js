@@ -7,10 +7,10 @@ dotenv.config({ quiet: true });
 let accessToken = null;
 let tokenExpiresAt = 0;
 
+// Reuse access token if still valid. Otherwise, grant a new one.
 async function getAccessToken() {
   const now = Date.now();
 
-  // Reuse token if still valid
   if (accessToken && now < tokenExpiresAt) {
     return accessToken;
   }
@@ -43,32 +43,32 @@ async function getAccessToken() {
   return accessToken;
 }
 
+// Retrieve all songs in each playlist and their popularity scores
 async function getTracks(playlist) {
   try {
-    const token2 = await getAccessToken();
+    const token = await getAccessToken();
     let url = playlist.tracks.href;
     const popularity = [];
 
     while (url) {
       const response = await fetch(url, {
-        headers: { Authorization: `Bearer ${token2}`}
+        headers: { Authorization: `Bearer ${token}`}
       });
 
       if(!response.ok) {
       throw new Error(`Spotify API error: ${response.status}`);
       }
 
-      const data2 = await response.json();
+      const data = await response.json();
 
       popularity.push(
-        ...data2.items
+        ...data.items
         .filter(item => item.track?.popularity != null)
         .map(item => item.track.popularity)
       );
 
-      url = data2.next;
+      url = data.next;
     }
-
     return popularity;
   }
   catch (err) {
@@ -76,7 +76,6 @@ async function getTracks(playlist) {
     return [];
   }
 }
-
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -86,9 +85,7 @@ const rl = readline.createInterface({
 rl.question("Enter Spotify user ID: ", async (userID) => {
   try {
     const encodedUser = encodeURIComponent(userID);
-
     const url = `https://api.spotify.com/v1/users/${encodedUser}/playlists`
-
     const token = await getAccessToken();
 
     const response = await fetch(url, {
@@ -124,7 +121,6 @@ rl.question("Enter Spotify user ID: ", async (userID) => {
         81-100: Global/Mass Appeal. You mostly listen to the biggest artists in the world.`)
 
     }
-    
   } catch (err) {
     console.error(err.message);
   } finally {
