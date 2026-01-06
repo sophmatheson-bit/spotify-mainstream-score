@@ -18,7 +18,7 @@ You'll need:
 - Spotify refresh token with playlist access
 
 ## Installation and usage
-:one: Install dependencies
+:one: Install dependencies  
 :two: Create a .env file in the project root
 
 ```
@@ -28,9 +28,9 @@ SPOTIFY_REFRESH_TOKEN=your_refresh_token
 
 ```
 ### :warning: **Never commit your ```.env``` file**
-It is in the ```.gitignore``` filre currently.
+It is in the ```.gitignore``` file currently.
 
-:three: Run the script.
+:three: Run the script.  
 :four: Enter your Spotify user ID found by navigating to your profile on the Spotify browser version and copying the string following ```https://open.spotify.com/user/``` in the address bar.
 
 ## Output
