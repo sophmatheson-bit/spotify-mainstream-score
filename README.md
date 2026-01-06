@@ -1,5 +1,5 @@
 # spotify-mainstream-score
-**Input your Spotify user ID and receive a score (0-100) that determines how mainstream your music taste is.**
+**Input your Spotify user ID and receive a score (0-100) that determines how mainstream your music taste is.**  
 This CLI tool analyzes your public Spotify playlists and calculates a "mainstream score" based on how popular the tracks are.
 
 # Features
@@ -21,11 +21,11 @@ The app:
 - Node Package Manager (npm/yarn)
 
 ## Prerequisites
-Before running the project, make sure you have:
-:heavy_check_mark: Node.js installed
-:heavy_check_mark: A **Spotify Developer account**
-:heavy_check_mark: A registered Spotify app
-:heavy_check_mark: A **Refresh Token** with playlist access
+Before running the project, make sure you have:  
+✔️ Node.js installed  
+✔️ A **Spotify Developer account**  
+✔️ A registered Spotify app  
+✔️ A **Refresh Token** with playlist access  
 
 ## Installation
 :one: Clone the repo
@@ -33,8 +33,10 @@ Before running the project, make sure you have:
 git clone https://github.com/sophmatheson-bit/spotify-mainstream-score.git
 cd spotify-mainstream-score
 ```
-:two: Install dependencies
-```npm install```
+:two: Install dependencies  
+
+```npm install```  
+
 :three: Create a ```.env``` file in the project root and add:
 ```
 SPOTIFY_CLIENT_ID=your_client_id
@@ -44,13 +46,17 @@ SPOTIFY_REFRESH_TOKEN=your_refresh_token
 ### :warning: ***Do not commit your ```.env``` file!*** It should be ignored via ```.gitignore```
 
 ## Usage
-Run the script:
-```npm start```
-Follow the prompt to input your Spotify User ID.  
-Your User ID is found in the URL when viewing your profile in a web browser:
+:one: Run the script:  
+
+```npm start```  
+
+:two: Follow the prompt to input your Spotify User ID.  
+
+Your User ID is found in the URL when viewing your profile in a web browser:  
+
 ```https://open.spotify.com/user/<your_user_id>```
 
-Example output:
+### Example output
 ```
 Your mainstream score: 45.49358307318765
         0-20: Deep niche/obscure. You listen to underground, experimental, or very new artists.
@@ -61,7 +67,7 @@ Your mainstream score: 45.49358307318765
 ```
 
 ## Enhancement Ideas
-- Employ /me endpoint to retrieve the User ID automatically
+- Employ ```/me``` endpoint to retrieve the User ID automatically
 - Gather additional data such as listening habits over time
 - A web UI to display user scores and stats
 
