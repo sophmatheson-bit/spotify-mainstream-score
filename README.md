@@ -15,7 +15,7 @@ The app:
 3. Computes an overall **mainstream score (0-100)**
 4. Describes what that score means in terms of listening preferences
 
-# Tech Stack
+## Tech Stack
 - JavaScript / Node.js
 - Spotify Web API
 - Node Package Manager (npm/yarn)
@@ -66,7 +66,7 @@ Your mainstream score: 45.49358307318765
         81-100: Global/Mass Appeal. You mostly listen to the biggest artists in the world.
 ```
 
-## Enhancement Ideas
+# Enhancement Ideas
 - Employ ```/me``` endpoint to retrieve the User ID automatically
 - Gather additional data such as listening habits over time
 - A web UI to display user scores and stats
